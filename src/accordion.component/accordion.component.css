@@ -224,7 +224,7 @@ input::-webkit-inner-spin-button {
 }
 
 .checkbox-wrapper-65 {
-  user-select: none;
+  -webkit-user-select: none;
   display: flex;
   flex-direction: column;
   align-items: center;

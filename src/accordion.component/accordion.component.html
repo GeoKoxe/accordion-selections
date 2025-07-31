@@ -38,6 +38,7 @@
   class="checkbox-wrapper-65"
   tabindex="0"
   role="checkbox"
+  aria-checked="true"
   [attr.aria-checked]="isSelected(item.itemId, size.sizeId)"
   (click)="toggleCheckbox(item.itemId, size.sizeId)"
   (keydown)="onCheckboxKeydown($event, item.itemId, size.sizeId)"
