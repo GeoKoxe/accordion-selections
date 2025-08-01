@@ -2,98 +2,74 @@
   <div class="menu-title">Pizza</div>
   @for (item of items; track item; let index = $index) {
     <cdk-accordion-item #accordionItem="cdkAccordionItem" class="example-accordion-item">
-      <div
-        class="accordion-content-wrapper"
-        [ngClass]="{ expanded: accordionItem.expanded, collapsed: !accordionItem.expanded }"
-      >
-        <button
-          class="example-accordion-item-header"
-          (click)="accordionItem.toggle()"
-          tabindex="0"
-          [attr.id]="'accordion-header-' + index"
-          [attr.aria-expanded]="accordionItem.expanded"
-          [attr.aria-controls]="'accordion-body-' + index"
-        >
-          <fa-icon
-            [icon]="faChevronDown"
-            [class.expanded]="accordionItem.expanded"
-            class="accordion-chevron"
-            aria-hidden="true"
-          ></fa-icon>
+      <div class="accordion-content-wrapper"
+           [ngClass]="{ expanded: accordionItem.expanded, collapsed: !accordionItem.expanded }">
+        <button class="example-accordion-item-header"
+                type="button"
+                (click)="accordionItem.toggle()"
+                [attr.id]="'accordion-header-' + index"
+                [attr.aria-expanded]="accordionItem.expanded"
+                [attr.aria-controls]="'accordion-body-' + index">
+          <fa-icon [icon]="faChevronDown"
+                   [class.expanded]="accordionItem.expanded"
+                   class="accordion-chevron"
+                   aria-hidden="true"></fa-icon>
           {{ item.name }}
         </button>
-
         @if (accordionItem.expanded) {
-          <div
-            class="example-accordion-item-body"
-            role="region"
-            [style.display]="accordionItem.expanded ? '' : 'none'"
-            [attr.id]="'accordion-body-' + index"
-            [attr.aria-labelledby]="'accordion-header-' + index"
-          ><div class="price-selection-section">
-            @for (size of itemSizes; track size.sizeId) {
-              
+          <div class="example-accordion-item-body"
+               role="region"
+               [attr.id]="'accordion-body-' + index"
+               [attr.aria-labelledby]="'accordion-header-' + index">
+            <div class="price-selection-section">
+              @for (size of itemSizes; track size.sizeId) {
                 <div class="price-cards">
-                  <div
-  class="checkbox-wrapper-65"
-  tabindex="0"
-  role="checkbox"
-  aria-checked="true"
-  [attr.aria-checked]="isSelected(item.itemId, size.sizeId)"
-  (click)="toggleCheckbox(item.itemId, size.sizeId)"
-  (keydown)="onCheckboxKeydown($event, item.itemId, size.sizeId)"
->
-  <span class="cbx">
-    <svg width="12px" height="11px" viewBox="0 0 12 11">
-      <polyline points="1 6.29411765 4.5 10 11 1"></polyline>
-    </svg>
-  </span>
-  <span>{{ size.name }}</span>
-</div>
-
+                  <label class="checkbox-wrapper-65"
+                         role="checkbox"
+                         tabindex="0"
+                         [attr.aria-checked]="isSelected(item.itemId, size.sizeId)"
+                         (click)="toggleCheckbox(item.itemId, size.sizeId)"
+                         (keydown)="onCheckboxKeydown($event, item.itemId, size.sizeId)">
+                    <span class="cbx">
+                      <svg width="12px" height="11px" viewBox="0 0 12 11">
+                        <polyline points="1 6.29411765 4.5 10 11 1"></polyline>
+                      </svg>
+                    </span>
+                    <span>{{ size.name }}</span>
+                  </label>
                   <div class="price-input-section">
-                    <label
-                      [for]="'price-' + item.itemId + '-' + size.sizeId"
-                      class="visually-hidden"
-                    >
+                    <label [for]="'price-' + item.itemId + '-' + size.sizeId" class="visually-hidden">
                       Price for {{ item.name }}, size {{ size.name }}
                     </label>
                     <span class="currency-box" aria-hidden="true">$</span>
-                    <input
-                      type="number"
-                      step="0.01"
-                      [id]="'price-' + item.itemId + '-' + size.sizeId"
-                      [value]="getPrice(item.itemId, size.sizeId)"
-                      [disabled]="!isSelected(item.itemId, size.sizeId)"
-                      (input)="updatePrice(item.itemId, size.sizeId, $any($event.target).value)"
-                      placeholder="Price"
-                      class="price-input"
-                    />
+                    <input type="number"
+                           step="0.01"
+                           [id]="'price-' + item.itemId + '-' + size.sizeId"
+                           [value]="getPrice(item.itemId, size.sizeId)"
+                           [disabled]="!isSelected(item.itemId, size.sizeId)"
+                           (input)="updatePrice(item.itemId, size.sizeId, $any($event.target).value)"
+                           placeholder="Price"
+                           class="price-input" />
                   </div>
                 </div>
-              
-            }
-          </div>
+              }
+            </div>
             <div class="undo-button-container">
               @if (hasChanges(item.itemId)) {
-                <button
-                  type="button"
-                  (click)="undoChanges(item.itemId)"
-                  class="undo-button"
-                  [attr.aria-label]="'Undo changes for ' + item.name" title="Undo changes for {{ item.name }}"
-                >
-                  <fa-icon
-                    [icon]="faRotateLeft"
-                    [class.expanded]="accordionItem.expanded"
-                    class="accordion-rotate-icon"
-                    aria-hidden="true"
-                  ></fa-icon>
+                <button type="button"
+                        (click)="undoChanges(item.itemId)"
+                        class="undo-button"
+                        [attr.aria-label]="'Undo changes for ' + item.name"
+                        title="Undo changes for {{ item.name }}">
+                  <fa-icon [icon]="faRotateLeft"
+                           class="accordion-rotate-icon"
+                           aria-hidden="true"></fa-icon>
                 </button>
               }
             </div>
           </div>
         }
       </div>
-      </cdk-accordion-item>
+    </cdk-accordion-item>
   }
 </cdk-accordion>
